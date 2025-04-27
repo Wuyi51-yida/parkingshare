@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 添加描述和关键词 -->
+    <meta name="description" content="共享车位管理系统登录选择界面，提供车位主和管理员两种登录方式。">
+    <meta name="keywords" content="共享车位, 停车管理, 车位主登录, 管理员登录">
+    <title>共享车位管理系统 - 登录选择界面</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        /* 初始化所有元素的边距和填充，并设置盒模型为border-box */
+        * {
+            margin: 0;/* 外边距 */
+            padding: 0;/* 内边距 */
+            box-sizing: border-box;/* 盒模型 */
+            font-family: "Microsoft YaHei", sans-serif;/* 字体 */
+        }
+
+        /* 设置背 景容器*/
+        body {
+            background-image: url('../img/车位主界面/背景图.jpg');
+            background-size: cover; /* 使背景图片覆盖整个页面 */
+            background-repeat: no-repeat; /* 防止背景图片重复 */
+            background-attachment: fixed; /* 使背景图片固定，不随滚动条滚动 */
+            min-height: 100vh;/* 最小高度为视口高度 */
+            display: flex;/* 使元素居中 */
+            justify-content: center;/* 使元素水平居中 */
+            align-items: center;/* 使元素垂直居中 */
+        }
+
+        /* 容器样式*/
+        .container {
+            padding: 2rem;/* 内边距 */
+            border-radius: 15px;/* 圆角 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);/* 阴影 */
+            width: 100%;/* 宽度 */
+            max-width: 450px; /* 最大宽度 */
+            margin-bottom: 1rem;/* 底部外边距 */
+        }
+
+        /* 头部样式：居中，底部外边距 */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2a5caa;
+        }
+
+        /* 头部标题样式：颜色，字体大小，底部外边距 */
+        .header h1 {
+            color: rgb(85, 85, 183); 
+            font-size: 2.2rem; 
+            margin-bottom: 0.5rem;
+            margin-top: -1rem; 
+        }
+
+        /* 按钮组样式：垂直排列，间距 */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* 身份选择按钮样式：内边距，无边框，圆角，背景色，文字颜色，字体大小，鼠标指针，过渡效果，相对定位，溢出隐藏 */
+        .identity-btn {
+            padding: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: #f8f9ff;
+            color: #2a5caa;
+            font-size: 1.1rem;
+            font-weight: bold; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 悬停时身份选择按钮样式：向上移动，阴影增强，背景色变化，文字颜色变化 */
+        .identity-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42,92,170,0.2);
+            background: #2a5caa;
+            color: white;
+        }
+
+        /* 激活时身份选择按钮样式：重置位置 */
+        .identity-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 标题容器样式 */
+        .title-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* 媒体查询：屏幕宽度小于等于480px时的样式 */
+        @media (max-width: 480px) {
+            /* 容器样式调整：内边距缩小 */
+            .container {
+                padding: 1.5rem;
+            }
+            
+            /* 身份选择按钮样式调整：字体大小和内边距缩小 */
+            .identity-btn {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+
+            /* 小屏幕时容器水平排列调整 */
+            .container-group {
+                flex-direction: column;
+            }
+        }
+
+        /* 新增样式：容器组样式 */
+        .container-group {
+            display: flex;
+            gap: 1rem;
+        }
+    </style>
+    <!-- 添加结构化数据 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "共享车位管理系统 - 登录选择界面",
+      "description": "共享车位管理系统登录选择界面，提供车位主和管理员两种登录方式。",
+      "url": "http://example.com/登录选择界面.html",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://example.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <div class="title-container">
+            <h1>共享车位管理系统</h1>
+        </div>
+        <div class="container-group">
+            <div class="container">
+                <div class="btn-group">
+                    <button 
+                        v-for="(item, index) in options.slice(0, 1)"
+                        :key="index"
+                        class="identity-btn"
+                        @click="handleSelect(item)"
+                    >
+                        {{ item }}
+                    </button>
+                </div>
+            </div>
+            <div class="container">
+                <div class="btn-group">
+                    <button 
+                        v-for="(item, index) in options.slice(1)"
+                        :key="index"
+                        class="identity-btn"
+                        @click="handleSelect(item)"
+                    >
+                        {{ item }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                // 登录选项数组
+                options: [
+                    '车位主登录',
+                    '管理员登录'
+                ]
+            },
+            methods: {
+                // 处理选择登录身份的逻辑
+                handleSelect(identity) {
+                    console.log('已选择:', identity);
+                    if (identity === '管理员登录') {
+                        window.location.href = './管理员登录界面.html'; // 跳转到管理员登录界面
+                    }else if (identity === '车位主登录') {
+                        window.location.href = './车位主登录界面.html';
+                    }else {
+                        alert(`已选择：${identity}`);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
